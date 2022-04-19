@@ -1,0 +1,20 @@
+rus:
+    letters: 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+    genders:
+        'unknown': 0
+        'M': 1
+        'F': 2
+    genders_reverse:
+        0: 'unknown'
+        1: 'M'
+        2: 'F'
+eng:
+    letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    genders:
+        'unknown': 0
+        'M': 1
+        'F': 2
+    genders_reverse:
+        0: 'unknown'
+        1: 'M'
+        2: 'F'

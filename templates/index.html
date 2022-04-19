@@ -1,0 +1,139 @@
+<html>
+  <head>
+    <title>Logs from {{ title }}</title>
+    <link rel="stylesheet" href="/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/searchPanes.dataTables.min.css">
+    <link rel="stylesheet" href="/css/select.dataTables.min.css">
+    
+    <script src="/js/jquery-3.5.1.js"></script>
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.searchPanes.min.js"></script>
+    <script src="/js/dataTables.select.min.js"></script>
+    <script src="/js/highcharts.js"></script>
+    <style>
+        label {
+            display: block;
+            font: .75rem 'Fira Sans', sans-serif;
+        }
+
+    input, label {
+        margin: .4rem 0;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function () {
+    // Create DataTable
+    var table = $('#logtable').DataTable({
+        dom: 'Pfrtip',
+    });
+ 
+    // Create the chart with initial data
+    var container = $('<div/>').insertBefore(table.table().container());
+ 
+    var chart = Highcharts.chart(container[0], {
+        chart: {
+            type: 'pie',
+        },
+        title: {
+            text: 'Some Statistics...',
+        },
+        series: [
+            {
+                data: chartData(table),
+            },
+        ],
+    });
+ 
+    // On each draw, update the data in the chart
+    table.on('draw', function () {
+        chart.series[0].setData(chartData(table));
+    });
+});
+ 
+function chartData(table) {
+    var counts = {};
+ 
+    // Count the number of entries for each position
+    table
+        .column(1, { search: 'applied' })
+        .data()
+        .each(function (val) {
+            if (counts[val]) {
+                counts[val] += 1;
+            } else {
+                counts[val] = 1;
+            }
+        });
+ 
+    // And map it to the format highcharts uses
+    return $.map(counts, function (val, key) {
+        return {
+            name: key,
+            y: val,
+        };
+    });
+}
+    </script>
+    <link rel="icon" href="/images/ico-i.png">
+  </head>
+  <body>
+    <table>
+        <tr>
+            <td><h1>Logging from {{ title }}</h1></td>
+            <td><img src='/images/gender.jpg' style="height:120"></td><form action = "/" method = "post">
+            <td align="bottom"><label for="start">Start date:</label>
+
+                <input type="date" id="start" name="start"
+                value="{{ date_select[0] }}"
+                min="{{ date_select[0] }}" max="{{ date_select[1] }}"></td><td align="bottom">
+            <label for="end">End date:</label>
+
+            <input type="date" id="end" name="end"
+                   value="{{ date_select[1] }}"
+                   min="{{ date_select[0] }}" max="{{ date_select[1] }}"></td><td align="bottom"><br>
+                   <input type = "submit" value = "select period" /></td></form>
+        </tr>
+    </table>
+    
+    
+      </div><br>
+      <table id="logtable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>date</th>
+                <th>time</th>
+                <th>source</th>
+                <th>type</th>
+                <th>kind</th>
+                <th>message</th>
+            </tr>       
+            
+        </thead>
+        <tbody>
+        </tr>
+        {% for k in ls %}
+        <tr style="color:{{ color[k] }}">
+          <td>{{ dats[k] }}</td>
+          <td>{{ times[k] }}</td>
+          <td>{{ source[k] }}</td>
+          <td>{{ types[k] }}</td>
+          <td>{{ kinds[k] }}</td>
+          <td>{{ mesagges[k] }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>date</th>
+                <th>time</th>
+                <th>source</th>
+                <th>type</th>
+                <th>kind</th>
+                <th>message</th>
+            </tr>     
+        </tfoot>
+    </table>
+
+  </body>
+</html>

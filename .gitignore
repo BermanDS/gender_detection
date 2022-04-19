@@ -25,6 +25,9 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.zip
+*.csv
+training_dataset.parquet
 MANIFEST
 
 # PyInstaller
@@ -32,12 +35,14 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+*.ipynb
 
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+old_function/
 htmlcov/
 .tox/
 .nox/
