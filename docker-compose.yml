@@ -15,4 +15,4 @@ services:
       ACCESS_NAME: $ACCESS_NAME
       ACCESS_PORT: $ACCESS_PORT
     command: >
-          sh -c "gunicorn -w 4 --bind :$GUI_PORT app:app"  
+          sh -c "gunicorn -w 4 --bind :$ACCESS_PORT app:app"  
